@@ -32,6 +32,22 @@ async function run() {
     // const reviewsCollection = database.collection('reviews');
     // const ordersCollection = database.collection('orders');
 
+    //Bid Job (By Md Hasib)----------------------------
+    app.post("/comments", async (req, res) => {
+      const comments = req.body;
+      const result = await commentsCollection.insertOne(comments);
+      res.json(result);
+    });
+
+    // get Bid jobs and find by Id query (by Md Hasib)----------
+    app.get("/comments", async (req, res) => {
+      const jobId = req.query.jobId;
+      const query = { jobId: jobId };
+      const cursor = commentsCollection.find(query);
+      const comments = await cursor.toArray();
+      res.json(comments);
+    });
+
     // Post Jobs
     app.post("/jobs", async (req, res) => {
       const jobs = req.body;
